@@ -1,0 +1,28 @@
+.error-message {
+    color:red;
+}
+
+.rounded-circle {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.username-text {
+    font-size: 1.75rem;
+}
+
+.btn {
+    width: 200px;
+    height: 50px;
+}
+
+.p_center {
+    text-align: center;
+}
+
+.preview-img {
+    width: 300px;
+    height: 250px;
+}

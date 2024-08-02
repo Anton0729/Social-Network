@@ -1,0 +1,12 @@
+.list-group-item {
+    font-size: 14px;
+}
+
+.list-group-item a {
+    color: black;
+    text-decoration: none;
+}
+
+.card {
+    width: 600px;
+}

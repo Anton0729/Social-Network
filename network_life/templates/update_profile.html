@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'network_life/css/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+Update {{request.user}}'s profile |
+{% endblock %}
+
+{% block content %}
+<br>
+{% if current_user == request.user.username %}
+<form method='POST' enctype="multipart/form-data" action="">
+    {% csrf_token %}
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">{{form.first_name.label}}:</label>
+        <div class="col-sm-10">
+            {{form.first_name}}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">{{form.second_name.label}}:</label>
+        <div class="col-sm-10">
+            {{form.second_name}}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">{{form.bio.label}}:</label>
+        <div class="col-sm-10">
+            {{form.bio}}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label">{{form.avatar.label}}:</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="file" name="avatar">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Update Profile</button>
+</form>
+{% else %}
+<h2 class="error-message">Error!</h2>
+<h3>You're trying to update another user's profile</h3>
+<h3>Your current profile: <a href="{% url 'network_life:update_profile' %}?user={{request.user}}">{{ request.user.username }}</a></h3>
+{% endif %}
+
+{% endblock %}

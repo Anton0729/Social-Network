@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'network_life/css/login.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<h1>Login</h1>
+<hr>
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+
+
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input name="username" type="text" id="form3Example3" class="form-control form-control-lg"
+                               placeholder="Enter your username"/>
+                        <label class="form-label" for="form3Example3">Username</label>
+                        <p>{{ form.errors.username }}</p>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
+                               placeholder="Enter password"/>
+                        <label class="form-label" for="form3Example4">Password</label>
+                        <p>{{ form.errors.password }}</p>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a
+                                href="{% url 'network_life:register' %}"
+                                class="link-danger">Register</a>
+                        </p>
+                    </div>
+                    <a href="{% provider_login_url 'google' method = 'oauth2' %}">Google</a>
+                    <a href="{% provider_login_url 'github' method = 'oauth2' %}">GitHub</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

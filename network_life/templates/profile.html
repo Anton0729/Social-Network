@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+{% endblock %}
+
+{% block title %}
+{{username}} |
+{% endblock %}
+
+{% block content %}
+<br>
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+
+<div class="d-flex justify-content-center">
+    <img src="{{ avatar.url }}" class="rounded-circle mb-3" alt="Image error!">
+</div>
+<div class="d-flex justify-content-center">
+    <p class="username-text"><b>{{ username }}</b></p>
+</div>
+<div class="d-flex justify-content-center">
+    <form action="{% url 'network_life:follow' follower=username user=request.user.username %}" method="post">
+        {% csrf_token %}
+        {% if request.user.username != username %}
+        <button type="submit" class="btn btn-danger">{{ button_text }}</button>
+        {% endif %}
+    </form>
+</div>
+<br>
+<div class="d-flex flex-row bd-highlight mb-3 d-flex justify-content-evenly">
+    <div class="p-2 bd-highlight">
+        <p class="p_center">{{ amount_posts }}</p>
+        <p>Posts</p>
+    </div>
+    <div class="p-2 bd-highlight">
+        <p class="p_center">{{ following_amount }}</p>
+        {% if request.user.username == username %}
+            <a href="{% url 'network_life:followers_accounts' username %}">Follower</a>
+        {% else %}
+            Followers
+        {% endif %}
+    </div>
+    <div class="p-2 bd-highlight">
+        <p class="p_center">{{ followers_amount }}</p>
+        {% if request.user.username == username %}
+            <a href="{% url 'network_life:following_accounts' username %}">Following</a>
+        {% else %}
+            Following
+        {% endif %}
+    </div>
+</div>
+
+<div class="d-flex justify-content-around flex-wrap">
+    {% for el in posts %}
+    <div class="d-inline-flex p-2 bd-highlight">
+        <a href="{% url 'network_life:post' el.id %}" target="_parent">
+            <img class="preview-img" src="{{ el.preview.url }}" alt="Image error"></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

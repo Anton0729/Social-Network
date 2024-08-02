@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Following accounts |
+{% endblock %}
+
+{% block content %}
+<h1>Accounts that you are follow</h1>
+<div class="list-group">
+    {% if following|length == 0 %}
+    <h4 style="color: red;">You don't follow anyone</h4>
+    {% else %}
+        {% for el in following %}
+            <a href="{% url 'network_life:profile' el.follow_to %}" class="list-group-item list-group-item-action list-group-item-success">{{ el.follow_to }}</a>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

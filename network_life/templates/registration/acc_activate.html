@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate your user account</title>
+</head>
+<body>
+{% autoescape off %}
+<div class="parent">
+    <h1 class="h1">NetworkLife*</h1>
+    <p>Hi, {{ user.username }}</p>
+    Your account has been successfully registered!<br>
+    <p>Please click the button below to verify your email address.</p>
+    <a href="http://{{ domain }}{% url 'network_life:activate' uidb64=uid token=token %}" target="_blank">Confirm Account</a>
+    <br><br>
+    <p>Or copy this link and paste in your browser</p>
+    http://{{ domain }}{% url 'network_life:activate' uidb64=uid token=token %}
+</div>
+{% endautoescape %}
+</body>
+</html>

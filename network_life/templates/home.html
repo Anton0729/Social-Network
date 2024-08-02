@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_link %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'network_life/css/home.css' %}">
+{% endblock %}
+
+{% block js_link %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'bundle.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% for el in posts %}
+<div class="d-flex justify-content-center">
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a href="{% url 'network_life:profile' el.name %}">
+                    <b>@{{ el.name }}</b>
+                </a>
+            </li>
+        </ul>
+        <a href="{% url 'network_life:post' el.id %}" target="_parent">
+            <img src="{{ el.preview.url }}" alt="Image didn't load"
+                                                          width="598px" height="350px"></a>
+        <div class="card-body">
+            <form action="{% url 'network_life:like-post-view' el.id %}" method="POST" id='like-form' elementID="{{el.id}}">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value={{el.id}}>
+
+                <button type="submit" name="post_id" value="{{ el.id }}" class="btn btn-danger btn-sm">Like 👍
+                </button>
+                <span id="likes_count{{el.id}}">
+                    {{ el.likes.count }}
+                </span>
+                likes
+            </form>
+
+            <hr>
+            {% if el.description %}
+                <p>{{ el.description }}</p>
+            {% endif %}
+
+            {% for tag in el.tags.all %}
+                #{{ tag }}
+            {% endfor %}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>{{ el.date_published|date:"D d M Y - H:i" }}</b>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
+{% endfor %}
+
+{% endblock %}
